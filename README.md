@@ -1,4 +1,4 @@
-
+This message creates a divergence in the tree.
 <h1 align="center"> mmg - Surface and volume remeshers </h1>
 <h3 align="center"> open source software for bidimensional and tridimensional surface and volume remeshing </h3>
 
