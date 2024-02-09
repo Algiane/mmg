@@ -7,15 +7,41 @@ on:
     types: [synchronize]
 
 jobs:
-  build:
+  emu-job:
+    runs-on: ubuntu-22.04
+    name: Build on ${{ matrix.distro }} ${{ matrix.arch }} emulated
 
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - arch: ppc64le
+            distro: ubuntu22.04
+          - arch: none
+            distro: none
+            base_image: amd64/ubuntu:22.04
 
     steps:
-    - uses: actions/checkout@v1
-    - name: configure
-      run: mkdir build && cd build && cmake -DONLY_VERY_SHORT_TESTS=ON -DBUILD_TESTING=ON ..
-    - name: make
-      run: cd build && make
-    - name: test
-      run: cd build && ctest
+      - uses: actions/checkout@v4
+      - uses: uraimo/run-on-arch-action@v2
+        with:
+          arch: ${{ matrix.arch }}
+          distro: ${{ matrix.distro }}
+
+          run: |
+            mkdir build && cd build
+            time cmake -DONLY_VERY_SHORT_TESTS=ON -DBUILD_TESTING=ON ..
+            time make
+            time ctest
+
+  non-emu:
+    runs-on: ubuntu-22.04
+    name: Build on ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: |
+          mkdir build && cd build
+          time cmake -DONLY_VERY_SHORT_TESTS=ON -DBUILD_TESTING=ON ..
+          time make
+          time ctest
