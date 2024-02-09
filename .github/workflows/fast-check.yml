@@ -26,8 +26,11 @@ jobs:
         with:
           arch: ${{ matrix.arch }}
           distro: ${{ matrix.distro }}
+          base_image: ${{ matrix.base_image }}
 
           run: |
+            apt-get update
+            apt-get install -y time cmake libgcc-9-dev
             mkdir build && cd build
             time cmake -DONLY_VERY_SHORT_TESTS=ON -DBUILD_TESTING=ON ..
             time make
