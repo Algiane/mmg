@@ -2,7 +2,7 @@ name: Long tests
 
 on:
   # run tests on push events
-  push:
+  #push:
   # run tests on PR events
   pull_request:
     types: [synchronize]

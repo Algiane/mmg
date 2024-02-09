@@ -30,7 +30,7 @@ jobs:
 
           run: |
             apt-get update
-            apt-get install -y time cmake libgcc-9-dev
+            apt-get install -y time libgcc-9-dev cmake
             mkdir build && cd build
             time cmake -DONLY_VERY_SHORT_TESTS=ON -DBUILD_TESTING=ON ..
             time make
